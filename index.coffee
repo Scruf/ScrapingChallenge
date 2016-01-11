@@ -1,19 +1,26 @@
 csv = require 'fast-csv'
 fs = require 'fs'
+cheerio = require 'cheerio'
+request = require 'request'
 list = []
 stream = fs.createReadStream "C:/Users/Kozitski/Downloads/9d3dfb739fc3-list+of+urls.csv"
-csvStream = csv().on('data',(data)->
-  list.push data
-  populateArray data
+csvStream = csv().on('data',(data,err)->
+  if err
+    throw err
+  else
+    list.push data
+
   return
   ).on('end',->
-
+    readFile(list);
     return
     )
 stream.pipe csvStream
-readFile=()->
-  console.log list
-  return
-populateArray = (temp)->
-  list.push temp
-  return
+readFile=(list)->
+  list.forEach (data)->
+    request data[0], (err,response)->
+      if err
+        throw err
+      else
+        $ = cheerio.load html
+        console.log this
