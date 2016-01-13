@@ -12,7 +12,7 @@
 
   list = [];
 
-  stream = fs.createReadStream("C:/Users/Kozitski/Downloads/9d3dfb739fc3-list+of+urls.csv");
+  stream = fs.createReadStream("C:/Users/ekozi/Downloads/9d3dfb739fc3-list+of+urls.csv");
 
   csvStream = csv().on('data', function(data, err) {
     if (err) {
@@ -28,10 +28,10 @@
 
   readFile = function(list) {
     return list.forEach(function(data) {
-      return request(data[0], function(err, response) {
+      return request(data[0], function(err, response, html) {
         var $;
         if (err) {
-          throw err;
+          return console.log(data[0]);
         } else {
           $ = cheerio.load(html);
           return console.log(this);
